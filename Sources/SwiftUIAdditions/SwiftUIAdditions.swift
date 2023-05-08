@@ -1,5 +1,31 @@
 import SwiftUI
 
+public struct If<TrueContent: View, FalseContent: View>: View {
+
+  var value: Bool
+  let trueContent: () -> TrueContent
+  let falseContent: () -> FalseContent
+
+  public init(
+    value: Bool,
+    @ViewBuilder trueContent: @escaping () -> TrueContent,
+    @ViewBuilder falseContent: @escaping () -> FalseContent
+  ) {
+    self.value = value
+    self.trueContent = trueContent
+    self.falseContent = falseContent
+  }
+
+  @ViewBuilder
+  public var body: some View {
+    if value {
+      trueContent()
+    } else {
+      falseContent()
+    }
+  }
+}
+
 public struct IfLet<T, Content: View>: View {
   let value: T?
   let content: (T) -> Content
